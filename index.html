@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hogwarts Student List</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Hogwarts Student List</h1>
+      <div id="searchbar">
+        <input class="search" type="search" placeholder="Search..." />
+      </div>
+      <select name="sortby" id="sortby">
+        <option value="placeholder" disabled>Sort by...</option>
+        <option value="firstname-az">Firstname A-Z</option>
+        <option value="firstname-za">Firstname Z-A</option>
+        <option value="lastname-az">Lastname A-Z</option>
+        <option value="lastname-za">Lastname Z-A</option>
+        <option value="house-az">House A-Z</option>
+        <option value="house-za">House Z-A</option>
+      </select>
+      <div class="filter-wrapper">
+        <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
+        <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
+        <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
+        <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
+        <button class="filter" data-action="filter" data-filter="attending">Attending</button>
+        <button class="filter" data-action="filter" data-filter="expelled">Expelled</button>
+      </div>
+      <div id="list-wrapper"></div>
+    </main>
+
+    <template id="student">
+      <article>
+        <img class="image" src="" alt="" />
+        <p class="firstName">firstname:</p>
+        <p class="middleName"></p>
+        <p class="lastName">lastname:</p>
+        <p class="nickName"></p>
+        <p class="gender">gender:</p>
+        <p class="house">house:</p>
+      </article>
+    </template>
+  </body>
+  <script src="script.js"></script>
+</html>
