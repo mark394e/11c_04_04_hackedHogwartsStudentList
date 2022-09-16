@@ -120,5 +120,25 @@ function displayStudents(studentArray) {
 }
 
 function showDetails(student) {
-  console.log("this is where the pop-up should be");
+  console.log("POP! POP!");
+
+  const popup = document.querySelector("#popup");
+  popup.style.display = "block";
+
+  popup.querySelector(".firstName").textContent = `Firstname: ${student.firstname}`;
+  popup.querySelector(".lastName").textContent = `Lastname: ${student.lastname}`;
+
+  if (student.middlename != "") {
+    popup.querySelector(".middleName").textContent = `Middlename: ${student.middlename}`;
+  }
+
+  if (student.nickname != "") {
+    popup.querySelector(".nickName").textContent = `Nickname: ${student.nickname}`;
+  }
+
+  popup.querySelector(".gender").textContent = `Gender: ${student.gender}`;
+  popup.querySelector(".house").textContent = `House: ${student.house}`;
+  popup.querySelector(".image").src = `images/${student.image}`;
+
+  document.querySelector("#luk").addEventListener("click", () => (popup.style.display = "none"));
 }
