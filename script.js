@@ -15,7 +15,7 @@ const Student = {
   lastname: "",
   gender: "",
   house: "",
-  image: ".jpg",
+  image: "",
 };
 
 async function init() {
@@ -113,6 +113,7 @@ function displayStudents(studentArray) {
     }
     klon.querySelector(".gender").textContent = `Gender: ${student.gender}`;
     klon.querySelector(".house").textContent = `House: ${student.house}`;
+    klon.querySelector(".image").src = `images/${student.image}`;
     klon.querySelector("article").addEventListener("click", () => showDetails(student));
     studentListView.appendChild(klon);
   });

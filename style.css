@@ -1,0 +1,15 @@
+article {
+  border: 2px solid darkred;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition-duration: 0.4s;
+}
+
+#list-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-row: 1fr;
+  gap: 30px;
+  margin-top: 40px;
+}
