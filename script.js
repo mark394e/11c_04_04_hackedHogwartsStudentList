@@ -188,6 +188,73 @@ function filterStudents(filter) {
   displayStudents(filteredStudents);
 }
 
+function sortStudents(sortBy) {
+  let sortedList = studentArray;
+
+  if (sortBy === "firstname-az") {
+    sortedList = sortedList.sort(sortByFirstnameAZ);
+  } else if (sortBy === "firstname-za") {
+    sortedList = sortedList.sort(sortByFirstnameZA);
+  } else if (sortBy === "lastname-az") {
+    sortedList = sortedList.sort(sortByLastnameAZ);
+  } else if (sortBy === "lastname-za") {
+    sortedList = sortedList.sort(sortByLastnameZA);
+  } else if (sortBy === "house-az") {
+    sortedList = sortedList.sort(sortByHouseAZ);
+  } else if (sortBy === "house-za") {
+    sortedList = sortedList.sort(sortByHouseZA);
+  }
+  displayStudents(sortedList);
+}
+
+function sortByFirstnameAZ(studentA, studentB) {
+  if (studentA.firstname > studentB.firstname) {
+    return 1;
+  } else {
+    return -1;
+  }
+}
+
+function sortByFirstnameZA(studentA, studentB) {
+  if (studentA.firstname < studentB.firstname) {
+    return 1;
+  } else {
+    return -1;
+  }
+}
+
+function sortByLastnameAZ(studentA, studentB) {
+  if (studentA.lastname > studentB.lastname) {
+    return 1;
+  } else {
+    return -1;
+  }
+}
+
+function sortByLastnameZA(studentA, studentB) {
+  if (studentA.lastname < studentB.lastname) {
+    return 1;
+  } else {
+    return -1;
+  }
+}
+
+function sortByHouseAZ(studentA, studentB) {
+  if (studentA.house > studentB.house) {
+    return 1;
+  } else {
+    return -1;
+  }
+}
+
+function sortByHouseZA(studentA, studentB) {
+  if (studentA.house < studentB.house) {
+    return 1;
+  } else {
+    return -1;
+  }
+}
+
 function isGryffindor(student) {
   return student.house === "Gryffindor";
 }
@@ -203,3 +270,7 @@ function isRavenclaw(student) {
 function isSlytherin(student) {
   return student.house === "Slytherin";
 }
+
+function isExpelled(student) {}
+
+function isAttending(student) {}
