@@ -20,7 +20,10 @@ const Student = {
 
 const settings = {
   filter: "all",
+  sortBy: "firstname-az",
 };
+
+let filterBy = "all";
 
 async function init() {
   console.log("ready");
@@ -41,19 +44,30 @@ function registerFilterButtons() {
 
 function selectFilter(event) {
   const filter = event.target.dataset.filter;
-  filterStudents(filter);
-  //   setFilter(filter);
+  //   filterStudents(filter);
+  setFilter(filter);
 }
 
 function selectSort(event) {
   const sortBy = event.target.value;
-  sortStudents(sortBy);
+  setSort(sortBy);
+}
+
+function setSort(sortBy) {
+  settings.sortBy = sortBy;
+  buildStudentList();
 }
 
 function setFilter(filter) {
   settings.filterBy = filter;
-  console.log(settings.filterBy);
-  buildList();
+  buildStudentList();
+}
+
+function buildStudentList() {
+  const currentStudentList = filterStudents(studentArray);
+  const sortedStudentList = sortStudents(currentStudentList);
+
+  displayStudents(sortedStudentList);
 }
 
 // fetching data from JSON and logging array in a table
@@ -181,86 +195,82 @@ function showDetails(student) {
   document.querySelector("#luk").addEventListener("click", () => (popup.style.display = "none"));
 }
 
-function filterStudents(filter) {
-  let filteredStudents = studentArray;
-
-  if (filter === "gryffindor") {
+function filterStudents(filteredStudents) {
+  if (settings.filterBy === "gryffindor") {
     filteredStudents = studentArray.filter(isGryffindor);
-  } else if (filter === "hufflepuff") {
+  } else if (settings.filterBy === "hufflepuff") {
     filteredStudents = studentArray.filter(isHufflepuff);
-  } else if (filter === "ravenclaw") {
+  } else if (settings.filterBy === "ravenclaw") {
     filteredStudents = studentArray.filter(isRavenclaw);
-  } else if (filter === "slytherin") {
+  } else if (settings.filterBy === "slytherin") {
     filteredStudents = studentArray.filter(isSlytherin);
   }
 
-  displayStudents(filteredStudents);
+  return filteredStudents;
 }
 
-function sortStudents(sortBy) {
-  let sortedList = studentArray;
-
-  if (sortBy === "firstname-az") {
-    sortedList = sortedList.sort(sortByFirstnameAZ);
-  } else if (sortBy === "firstname-za") {
-    sortedList = sortedList.sort(sortByFirstnameZA);
-  } else if (sortBy === "lastname-az") {
-    sortedList = sortedList.sort(sortByLastnameAZ);
-  } else if (sortBy === "lastname-za") {
-    sortedList = sortedList.sort(sortByLastnameZA);
-  } else if (sortBy === "house-az") {
-    sortedList = sortedList.sort(sortByHouseAZ);
-  } else if (sortBy === "house-za") {
-    sortedList = sortedList.sort(sortByHouseZA);
+function sortStudents(sortedStudentList) {
+  if (settings.sortBy === "firstname-az") {
+    sortedStudentList = sortedStudentList.sort(sortByFirstnameAZ);
+  } else if (settings.sortBy === "firstname-za") {
+    sortedStudentList = sortedStudentList.sort(sortByFirstnameZA);
+  } else if (settings.sortBy === "lastname-az") {
+    sortedStudentList = sortedStudentList.sort(sortByLastnameAZ);
+  } else if (settings.sortBy === "lastname-za") {
+    sortedStudentList = sortedStudentList.sort(sortByLastnameZA);
+  } else if (settings.sortBy === "house-az") {
+    sortedStudentList = sortedStudentList.sort(sortByHouseAZ);
+  } else if (settings.sortBy === "house-za") {
+    sortedStudentList = sortedStudentList.sort(sortByHouseZA);
   }
-  displayStudents(sortedList);
-}
+  return sortedStudentList;
 
-function sortByFirstnameAZ(studentA, studentB) {
-  if (studentA.firstname > studentB.firstname) {
-    return 1;
-  } else {
-    return -1;
+  function sortByFirstnameAZ(studentA, studentB) {
+    if (studentA.firstname > studentB.firstname) {
+      return 1;
+    } else {
+      return -1;
+    }
   }
-}
 
-function sortByFirstnameZA(studentA, studentB) {
-  if (studentA.firstname < studentB.firstname) {
-    return 1;
-  } else {
-    return -1;
+  function sortByFirstnameZA(studentA, studentB) {
+    if (studentA.firstname < studentB.firstname) {
+      return 1;
+    } else {
+      return -1;
+    }
   }
-}
 
-function sortByLastnameAZ(studentA, studentB) {
-  if (studentA.lastname > studentB.lastname) {
-    return 1;
-  } else {
-    return -1;
+  function sortByLastnameAZ(studentA, studentB) {
+    if (studentA.lastname > studentB.lastname) {
+      return 1;
+    } else {
+      return -1;
+    }
   }
-}
 
-function sortByLastnameZA(studentA, studentB) {
-  if (studentA.lastname < studentB.lastname) {
-    return 1;
-  } else {
-    return -1;
+  function sortByLastnameZA(studentA, studentB) {
+    if (studentA.lastname < studentB.lastname) {
+      return 1;
+    } else {
+      return -1;
+    }
   }
-}
 
-function sortByHouseAZ(studentA, studentB) {
-  if (studentA.house > studentB.house) {
-    return 1;
-  } else {
-    return -1;
+  function sortByHouseAZ(studentA, studentB) {
+    if (studentA.house > studentB.house) {
+      return 1;
+    } else {
+      return -1;
+    }
   }
-}
 
-function sortByHouseZA(studentA, studentB) {
-  if (studentA.house < studentB.house) {
-    return 1;
-  } else {
-    return -1;
+  function sortByHouseZA(studentA, studentB) {
+    if (studentA.house < studentB.house) {
+      return 1;
+    } else {
+      return -1;
+    }
   }
 }
 
