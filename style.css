@@ -35,3 +35,8 @@ article {
   flex-direction: column;
   align-items: center;
 }
+
+#action-buttons {
+  display: flex;
+  justify-content: space-evenly;
+}

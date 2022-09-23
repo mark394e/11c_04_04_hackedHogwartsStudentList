@@ -16,6 +16,7 @@ const Student = {
   gender: "",
   house: "",
   image: "",
+  expelled: false,
 };
 
 const settings = {
@@ -44,7 +45,6 @@ function registerFilterButtons() {
 
 function selectFilter(event) {
   const filter = event.target.dataset.filter;
-  //   filterStudents(filter);
   setFilter(filter);
 }
 
@@ -142,7 +142,7 @@ function prepareStudents(studentList) {
     studentArray.push(student);
   });
 
-  displayStudents(studentArray);
+  buildStudentList();
 }
 
 function displayStudents(studentArray) {
@@ -154,7 +154,10 @@ function displayStudents(studentArray) {
     let klon = template.cloneNode(true).content;
 
     klon.querySelector(".firstName").textContent = `Firstname: ${student.firstname}`;
-    klon.querySelector(".lastName").textContent = `Lastname: ${student.lastname}`;
+
+    if (student.lastname != "") {
+      klon.querySelector(".lastName").textContent = `Lastname: ${student.lastname}`;
+    }
 
     if (student.middlename != "") {
       klon.querySelector(".middleName").textContent = `Middlename: ${student.middlename}`;
@@ -166,7 +169,27 @@ function displayStudents(studentArray) {
     klon.querySelector(".gender").textContent = `Gender: ${student.gender}`;
     klon.querySelector(".house").textContent = `House: ${student.house}`;
     klon.querySelector(".image").src = `images/${student.image}`;
-    klon.querySelector("article").addEventListener("click", () => showDetails(student));
+
+    if (student.expelled === true) {
+      klon.querySelector("#expell").textContent = "❌";
+    } else {
+      klon.querySelector("#expell").textContent = "✅";
+    }
+
+    klon.querySelector("#expell").addEventListener("click", clickExpell);
+
+    function clickExpell() {
+      console.log("clickExpell");
+      if (student.expelled === true) {
+        student.expelled = false;
+      } else {
+        student.expelled = true;
+      }
+
+      buildStudentList();
+    }
+
+    klon.querySelector("#studentpic").addEventListener("click", () => showDetails(student));
     studentListView.appendChild(klon);
   });
 }
@@ -204,6 +227,10 @@ function filterStudents(filteredStudents) {
     filteredStudents = studentArray.filter(isRavenclaw);
   } else if (settings.filterBy === "slytherin") {
     filteredStudents = studentArray.filter(isSlytherin);
+  } else if (settings.filterBy === "attending") {
+    filteredStudents = studentArray.filter(isAttending);
+  } else if (settings.filterBy === "expelled") {
+    filteredStudents = studentArray.filter(isExpelled);
   }
 
   return filteredStudents;
@@ -290,6 +317,10 @@ function isSlytherin(student) {
   return student.house === "Slytherin";
 }
 
-function isExpelled(student) {}
+function isExpelled(student) {
+  return student.expelled === true;
+}
 
-function isAttending(student) {}
+function isAttending(student) {
+  return student.expelled === false;
+}
