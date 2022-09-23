@@ -11,7 +11,7 @@
     <main>
       <h1>Hogwarts Student List</h1>
       <div id="searchbar">
-        <input class="search" type="search" placeholder="Search..." />
+        <input class="search" type="search" placeholder="🔍 Search..." />
       </div>
       <select name="sortby" id="sortby">
         <option value="placeholder" disabled>Sort by...</option>
@@ -23,6 +23,7 @@
         <option value="house-za">House Z-A</option>
       </select>
       <div class="filter-wrapper">
+        <button class="filter" data-action="filter" data-filter="all">All</button>
         <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
         <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
         <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>

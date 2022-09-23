@@ -18,17 +18,39 @@ const Student = {
   image: "",
 };
 
+const settings = {
+  filter: "all",
+};
+
 async function init() {
   console.log("ready");
+  registerFilterButtons();
 
   loadStudents();
+}
+
+function registerFilterButtons() {
+  document.querySelectorAll("[data-action='filter']").forEach((filterButton) => {
+    filterButton.addEventListener("click", selectFilter);
+  });
+}
+
+function selectFilter(event) {
+  const filter = event.target.dataset.filter;
+  filterStudents(filter);
+  //   setFilter(filter);
+}
+
+function setFilter(filter) {
+  settings.filterBy = filter;
+  console.log(settings.filterBy);
+  buildList();
 }
 
 // fetching data from JSON and logging array in a table
 async function loadStudents() {
   const response = await fetch(JSONArray);
   const studentList = await response.json();
-  console.table(studentList);
   prepareStudents(studentList);
 }
 
@@ -64,6 +86,9 @@ function prepareStudents(studentList) {
     // defining the lastname property. capitalising the first letter in lastname and lowering the rest
     student.lastname = fullName.substring(fullName.lastIndexOf(" ") + 1, fullName.lastIndexOf(" ") + 2).toUpperCase() + fullName.substring(fullName.lastIndexOf(" ") + 2).toLowerCase();
 
+    if (fullName.includes(" ") === false) {
+      student.lastname = "";
+    }
     // ------------------------------ TODO: -------------------------------- //
 
     // if (student.lastname.includes("-")) {
@@ -84,6 +109,10 @@ function prepareStudents(studentList) {
     // if the fullName includes a hyphen then lower the letters in the last name after the hyphen and add the underscore, first letter of first name in lower case and ".png"
     if (fullName.includes("-")) {
       student.image = fullName.substring(fullName.lastIndexOf("-") + 1).toLowerCase() + "_" + fullName.substring(0, 1).toLowerCase() + ".png";
+    }
+
+    if (fullName.includes("Patil")) {
+      student.image = fullName.substring(fullName.lastIndexOf(" ")).trim().toLowerCase() + "_" + fullName.substring(0, fullName.indexOf(" ")).trim().toLowerCase() + ".png";
     }
 
     // adding all the student-objects to the student array
@@ -120,7 +149,7 @@ function displayStudents(studentArray) {
 }
 
 function showDetails(student) {
-  console.log("POP! POP!");
+  //   console.log("POP! POP!");
 
   const popup = document.querySelector("#popup");
   popup.style.display = "block";
@@ -141,4 +170,36 @@ function showDetails(student) {
   popup.querySelector(".image").src = `images/${student.image}`;
 
   document.querySelector("#luk").addEventListener("click", () => (popup.style.display = "none"));
+}
+
+function filterStudents(filter) {
+  let filteredStudents = studentArray;
+
+  if (filter === "gryffindor") {
+    filteredStudents = studentArray.filter(isGryffindor);
+  } else if (filter === "hufflepuff") {
+    filteredStudents = studentArray.filter(isHufflepuff);
+  } else if (filter === "ravenclaw") {
+    filteredStudents = studentArray.filter(isRavenclaw);
+  } else if (filter === "slytherin") {
+    filteredStudents = studentArray.filter(isSlytherin);
+  }
+
+  displayStudents(filteredStudents);
+}
+
+function isGryffindor(student) {
+  return student.house === "Gryffindor";
+}
+
+function isHufflepuff(student) {
+  return student.house === "Hufflepuff";
+}
+
+function isRavenclaw(student) {
+  return student.house === "Ravenclaw";
+}
+
+function isSlytherin(student) {
+  return student.house === "Slytherin";
 }
