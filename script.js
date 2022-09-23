@@ -33,12 +33,21 @@ function registerFilterButtons() {
   document.querySelectorAll("[data-action='filter']").forEach((filterButton) => {
     filterButton.addEventListener("click", selectFilter);
   });
+
+  document.querySelectorAll("[data-action='sort']").forEach((sortOption) => {
+    sortOption.addEventListener("click", selectSort);
+  });
 }
 
 function selectFilter(event) {
   const filter = event.target.dataset.filter;
   filterStudents(filter);
   //   setFilter(filter);
+}
+
+function selectSort(event) {
+  const sortBy = event.target.value;
+  sortStudents(sortBy);
 }
 
 function setFilter(filter) {
