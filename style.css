@@ -40,3 +40,37 @@ article {
   display: flex;
   justify-content: space-evenly;
 }
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog {
+  box-shadow: 1px 1px 10px #333;
+  border-radius: 12px;
+  padding: 2em;
+  background-color: rgb(255, 163, 42);
+  position: relative;
+}
+
+.closebutton {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.dialog h2 {
+  margin-top: 0;
+}
+
+.hide {
+  display: none;
+}

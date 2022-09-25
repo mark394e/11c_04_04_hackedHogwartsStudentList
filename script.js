@@ -17,6 +17,8 @@ const Student = {
   house: "",
   image: "",
   expelled: false,
+  prefect: false,
+  in_squad: false,
 };
 
 const settings = {
@@ -143,6 +145,11 @@ function prepareStudents(studentList) {
   });
 
   buildStudentList();
+  showNumberOfStudents();
+}
+
+function showNumberOfStudents() {
+  document.querySelector("#numberofstudents").textContent = `Attending students: ${studentArray.length}`;
 }
 
 function displayStudents(studentArray) {
@@ -174,6 +181,45 @@ function displayStudents(studentArray) {
       klon.querySelector("#expell").textContent = "❌";
     } else {
       klon.querySelector("#expell").textContent = "✅";
+    }
+
+    if (student.prefect === true) {
+      klon.querySelector("#prefect").textContent = "❤";
+    } else {
+      klon.querySelector("#prefect").textContent = "♡";
+    }
+
+    if (student.in_squad === true) {
+      klon.querySelector("#in-squad").textContent = "★";
+    } else {
+      klon.querySelector("#in-squad").textContent = "☆";
+    }
+
+    klon.querySelector("#in-squad").addEventListener("click", clickInSquad);
+
+    function clickInSquad() {
+      console.log("clickInSquad");
+      if (student.in_squad === true) {
+        student.in_squad = false;
+      } else {
+        student.in_squad = true;
+      }
+
+      buildStudentList();
+    }
+
+    klon.querySelector("#prefect").addEventListener("click", clickPrefect);
+
+    function clickPrefect() {
+      console.log("clickPrefect");
+      if (student.prefect === true) {
+        student.prefect = false;
+      } else {
+        tryToMakeAPrefect(student);
+        // student.prefect = true;
+      }
+
+      buildStudentList();
     }
 
     klon.querySelector("#expell").addEventListener("click", clickExpell);
@@ -216,6 +262,66 @@ function showDetails(student) {
   popup.querySelector(".image").src = `images/${student.image}`;
 
   document.querySelector("#luk").addEventListener("click", () => (popup.style.display = "none"));
+}
+
+function tryToMakeAPrefect(selectedStudent) {
+  const prefects = studentArray.filter((student) => student.prefect);
+
+  const numberOfPrefects = prefects.length;
+
+  const otherStudent = prefects.filter((student) => student.gender === selectedStudent.gender).shift();
+
+  if (otherStudent !== undefined) {
+    console.log(`there can only be one prefect of each gender`);
+    removeOtherStudent(otherStudent);
+  } else if (numberOfPrefects >= 2) {
+    // might delete later as there are only two genders in hogwarts and there can only be one of each.
+    // the gender rule overrules the number of prefects rule
+    console.log("There can only be two prefects");
+    removeAorB(prefects[0], prefects[1]);
+  } else {
+    makePrefect(selectedStudent);
+  }
+
+  function removeOtherStudent(otherStudent) {
+    // displaying dialog box
+    document.querySelector("#remove_other").classList.remove("hide");
+
+    document.querySelector("#remove_button").addEventListener("click", clickRemoveButton);
+
+    // if ignoring dialog box
+    document.querySelector("#remove_other .closebutton").addEventListener("click", closeDialog);
+
+    function closeDialog() {
+      document.querySelector("#remove_other").classList.add("hide");
+      document.querySelector("#remove_button").removeEventListener("click", clickRemoveButton);
+      document.querySelector("#remove_other .closebutton").removeEventListener("click", closeDialog);
+    }
+
+    // if removing other prefect student
+    function clickRemoveButton() {
+      removePrefect(otherStudent);
+      makePrefect(selectedStudent);
+      buildStudentList();
+      closeDialog();
+    }
+  }
+  function removeAorB(prefectA, prefectB) {
+    // if removeA:
+    removePrefect(prefectA);
+    makePrefect(selectedStudent);
+
+    // else if removeB:
+    removePrefect(prefectB);
+    makePrefect(selectedStudent);
+  }
+  function removePrefect(prefectStudent) {
+    prefectStudent.prefect = false;
+    console.log(prefectStudent);
+  }
+  function makePrefect(student) {
+    student.prefect = true;
+  }
 }
 
 function filterStudents(filteredStudents) {

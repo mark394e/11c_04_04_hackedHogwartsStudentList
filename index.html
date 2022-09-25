@@ -10,11 +10,12 @@
   <body>
     <main>
       <h1>Hogwarts Student List</h1>
+      <p id="numberofstudents"></p>
       <div id="searchbar">
         <input class="search" type="search" placeholder="🔍 Search..." />
       </div>
       <select name="sortby" id="sortby">
-        <option value="placeholder" disabled>Sort by...</option>
+        <option value="placeholder" disabled selected hidden>Sort by...</option>
         <option value="firstname-az" data-action="sort">Firstname A-Z</option>
         <option value="firstname-za" data-action="sort">Firstname Z-A</option>
         <option value="lastname-az" data-action="sort">Lastname A-Z</option>
@@ -66,6 +67,17 @@
         <p id="in-squad">★</p>
       </article>
     </section>
+    <div id="remove_other" class="modal hide">
+      <div class="dialog">
+        <button class="closebutton">X</button>
+        <h2>Warning!</h2>
+        <p>
+          There can only be one prefect of each gender. <br />
+          Do you want to remove the other prefect?
+        </p>
+        <button id="remove_button">Remove the other prefect</button>
+      </div>
+    </div>
   </body>
   <script src="script.js"></script>
 </html>
