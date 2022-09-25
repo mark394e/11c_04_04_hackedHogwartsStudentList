@@ -31,8 +31,17 @@ let filterBy = "all";
 async function init() {
   console.log("ready");
   registerFilterButtons();
-
+  registerSearchBar();
   loadStudents();
+}
+
+function registerSearchBar() {
+  const searchInput = document.querySelector("[data-search]");
+
+  searchInput.addEventListener("input", (event) => {
+    const value = event.target.value;
+    console.log(searchedStudents);
+  });
 }
 
 function registerFilterButtons() {
@@ -211,12 +220,10 @@ function displayStudents(studentArray) {
     klon.querySelector("#prefect").addEventListener("click", clickPrefect);
 
     function clickPrefect() {
-      console.log("clickPrefect");
       if (student.prefect === true) {
         student.prefect = false;
       } else {
         tryToMakeAPrefect(student);
-        // student.prefect = true;
       }
 
       buildStudentList();
@@ -241,8 +248,6 @@ function displayStudents(studentArray) {
 }
 
 function showDetails(student) {
-  //   console.log("POP! POP!");
-
   const popup = document.querySelector("#popup");
   popup.style.display = "block";
 
@@ -269,16 +274,10 @@ function tryToMakeAPrefect(selectedStudent) {
 
   const numberOfPrefects = prefects.length;
 
-  const otherStudent = prefects.filter((student) => student.gender === selectedStudent.gender).shift();
+  const otherStudent = prefects.filter((student) => student.gender === selectedStudent.gender && student.house === selectedStudent.house).shift();
 
   if (otherStudent !== undefined) {
-    console.log(`there can only be one prefect of each gender`);
     removeOtherStudent(otherStudent);
-  } else if (numberOfPrefects >= 2) {
-    // might delete later as there are only two genders in hogwarts and there can only be one of each.
-    // the gender rule overrules the number of prefects rule
-    console.log("There can only be two prefects");
-    removeAorB(prefects[0], prefects[1]);
   } else {
     makePrefect(selectedStudent);
   }
@@ -307,6 +306,7 @@ function tryToMakeAPrefect(selectedStudent) {
     }
   }
   function removeAorB(prefectA, prefectB) {
+    console.log("remove a or b");
     // if removeA:
     removePrefect(prefectA);
     makePrefect(selectedStudent);
@@ -317,7 +317,6 @@ function tryToMakeAPrefect(selectedStudent) {
   }
   function removePrefect(prefectStudent) {
     prefectStudent.prefect = false;
-    console.log(prefectStudent);
   }
   function makePrefect(student) {
     student.prefect = true;
