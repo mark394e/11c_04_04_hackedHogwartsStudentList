@@ -38,12 +38,14 @@
     <template id="student">
       <article>
         <img class="image" src="" alt="" id="studentpic" />
+        <img src="" alt="" id="housecrest" />
         <p class="firstName">firstname:</p>
         <p class="middleName"></p>
         <p class="lastName"></p>
         <p class="nickName"></p>
         <p class="gender">gender:</p>
         <p class="house">house:</p>
+
         <div id="action-buttons">
           <button id="expell">Expell</button>
           <button id="prefect">Make prefect</button>
@@ -55,16 +57,23 @@
     <section id="popup">
       <article>
         <button id="luk">X</button>
-        <img class="image" src="" alt="" />
-        <p class="firstName">firstname:</p>
-        <p class="middleName"></p>
-        <p class="lastName">lastname:</p>
-        <p class="nickName"></p>
-        <p class="gender">gender:</p>
-        <p class="house">house:</p>
-        <p class="blood"></p>
+        <div id="column_left">
+          <img class="image" src="" alt="" />
+          <p class="firstName">firstname:</p>
+          <p class="middleName"></p>
+          <p class="lastName">lastname:</p>
+          <p class="nickName"></p>
+          <p class="gender">gender:</p>
+        </div>
+        <div id="column_right">
+          <p class="house">house:</p>
+          <p class="blood"></p>
+          <p class="squad"></p>
+          <p class="expelled"></p>
+        </div>
       </article>
     </section>
+
     <div id="remove_other" class="modal hide">
       <div class="dialog">
         <button class="closebutton">X</button>

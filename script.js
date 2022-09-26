@@ -202,13 +202,6 @@ function displayStudents(studentArray) {
       klon.querySelector(".lastName").textContent = `Lastname: ${student.lastname}`;
     }
 
-    if (student.middlename != "") {
-      klon.querySelector(".middleName").textContent = `Middlename: ${student.middlename}`;
-    }
-
-    if (student.nickname != "") {
-      klon.querySelector(".nickName").textContent = `Nickname: ${student.nickname}`;
-    }
     klon.querySelector(".gender").textContent = `Gender: ${student.gender}`;
     klon.querySelector(".house").textContent = `House: ${student.house}`;
     klon.querySelector(".image").src = `images/${student.image}`;
@@ -265,13 +258,12 @@ function displayStudents(studentArray) {
     klon.querySelector("#expell").addEventListener("click", clickExpell);
 
     function clickExpell() {
-      document.querySelector("#expell").style.backgroundColor = "red";
       klon.querySelector("#expell").removeEventListener("click", clickExpell);
-
-      console.log("clickExpell");
       if (student.expelled === true) {
         alert("Student is already expelled");
       } else {
+        student.in_squad = false;
+        student.prefect = false;
         studentArray.splice(studentArray.indexOf(student), 1);
         student.expelled = true;
         expelledStudents.push(student);
@@ -283,15 +275,19 @@ function displayStudents(studentArray) {
     if (student.house === "Gryffindor") {
       klon.style.backgroundColor = "#660000";
       klon.style.border = "4px solid #e09c09";
+      klon.querySelector("#housecrest").src = `housecrest/${student.house}.png`;
     } else if (student.house === "Hufflepuff") {
       klon.style.backgroundColor = "#ff9d0b";
       klon.style.border = "4px solid #1f1e19";
+      klon.querySelector("#housecrest").src = `housecrest/${student.house}.png`;
     } else if (student.house === "Slytherin") {
       klon.style.backgroundColor = "#2f751c";
       klon.style.border = "4px solid #cccccc";
+      klon.querySelector("#housecrest").src = `housecrest/${student.house}.png`;
     } else if (student.house === "Ravenclaw") {
       klon.style.backgroundColor = "#8e501d";
       klon.style.border = "4px solid #1a3956";
+      klon.querySelector("#housecrest").src = `housecrest/${student.house}.png`;
     }
 
     klon.querySelector("#studentpic").addEventListener("click", () => showDetails(student));
@@ -303,24 +299,54 @@ function displayStudents(studentArray) {
 
 function showDetails(student) {
   const popup = document.querySelector("#popup");
+  const popupArticle = document.querySelector("#popup article");
   popup.style.display = "block";
+
+  if (student.house === "Gryffindor") {
+    popupArticle.style.backgroundColor = "#660000";
+    popupArticle.style.border = "4px solid #e09c09";
+  } else if (student.house === "Hufflepuff") {
+    popupArticle.style.backgroundColor = "#ff9d0b";
+    popupArticle.style.border = "4px solid #1f1e19";
+  } else if (student.house === "Slytherin") {
+    popupArticle.style.backgroundColor = "#2f751c";
+    popupArticle.style.border = "4px solid #cccccc";
+  } else if (student.house === "Ravenclaw") {
+    popupArticle.style.backgroundColor = "#8e501d";
+    popupArticle.style.border = "4px solid #1a3956";
+  }
 
   popup.querySelector(".firstName").textContent = `Firstname: ${student.firstname}`;
   popup.querySelector(".lastName").textContent = `Lastname: ${student.lastname}`;
 
   if (student.middlename != "") {
     popup.querySelector(".middleName").textContent = `Middlename: ${student.middlename}`;
+  } else {
+    popup.querySelector(".middleName").textContent = "";
   }
 
   if (student.nickname != "") {
     popup.querySelector(".nickName").textContent = `Nickname: ${student.nickname}`;
+  } else {
+    popup.querySelector(".nickName").textContent = "";
   }
 
   popup.querySelector(".gender").textContent = `Gender: ${student.gender}`;
   popup.querySelector(".house").textContent = `House: ${student.house}`;
   popup.querySelector(".image").src = `images/${student.image}`;
-
   popup.querySelector(".blood").textContent = `Bloodstatus: ${student.bloodStatus}`;
+
+  if (student.expelled === true) {
+    document.querySelector(".expelled").textContent = "Expelled: Yes";
+  } else {
+    document.querySelector(".expelled").textContent = "Expelled: No";
+  }
+
+  if (student.in_squad === true) {
+    document.querySelector(".squad").textContent = "Inquisitorial Squad: Yes";
+  } else {
+    document.querySelector(".squad").textContent = "Inquisitorial Squad: No";
+  }
 
   document.querySelector("#luk").addEventListener("click", () => (popup.style.display = "none"));
 }
