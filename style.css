@@ -4,14 +4,18 @@ article {
   cursor: pointer;
   border-radius: 8px;
   transition-duration: 0.4s;
+  height: 300px;
+  width: 300px;
 }
 
 #list-wrapper {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   grid-row: 1fr;
   gap: 30px;
   margin-top: 40px;
+  margin-left: 100px;
+  margin-right: 100px;
 }
 
 #popup {
