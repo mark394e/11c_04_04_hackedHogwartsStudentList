@@ -32,6 +32,7 @@ const Student = {
 const settings = {
   filter: "all",
   sortBy: "firstname-az",
+  hacked: false,
 };
 
 let filterBy = "all";
@@ -238,7 +239,16 @@ function displayStudents(studentArray) {
 
     function clickInSquad() {
       console.log("clickInSquad");
-      if (student.in_squad === true) {
+
+      if (settings.hacked && student.house === "Slytherin") {
+        student.in_squad = true;
+        setTimeout(removeInSquad(), 1000);
+        function removeInSquad() {
+          console.log("removed in_squad");
+          student.in_squad = false;
+          this.querySelector("#in-squad").textContent = "Inquisitorial Squad";
+        }
+      } else if (student.in_squad === true) {
         student.in_squad = false;
       } else if (student.expelled === true) {
         alert("This student is expelled");
@@ -276,8 +286,8 @@ function displayStudents(studentArray) {
       } else {
         student.in_squad = false;
         student.prefect = false;
-        student.expelled = true;
         studentArray.splice(studentArray.indexOf(student), 1);
+        student.expelled = true;
         expelledStudents.push(student);
         showNumberOfStudents();
       }
@@ -536,6 +546,7 @@ function isAttending(student) {
 }
 
 function hackTheSystem() {
+  settings.hacked = true;
   const hacker = {
     firstname: "Markus",
     nickname: "Mergus",
@@ -544,16 +555,37 @@ function hackTheSystem() {
     gender: "Boy",
     house: "Slytherin",
     image: "hacker_me.png",
-    blood: "Pureblood",
+    blood: "Muggle-born",
     expelled: false,
     prefect: false,
     in_squad: true,
-    god_mode: true,
   };
 
   studentArray.push(hacker);
+
+  hackBloodStatus();
+
+  function hackBloodStatus() {
+    studentArray.forEach((student) => {
+      if (student.bloodStatus === "Muggle-born") {
+        student.bloodStatus = "Pureblood";
+      } else if (student.bloodStatus === "Halfblood") {
+        student.bloodStatus = "Pureblood";
+      } else {
+        let randomBlood = Math.floor(Math.random() * 3);
+        if (randomBlood == 0) {
+          student.bloodStatus = "Muggle-born";
+        } else if (randomBlood == 1) {
+          student.bloodStatus = "Halfblood";
+        } else {
+          student.bloodStatus = "Pureblood";
+        }
+      }
+      student.in_squad = false;
+    });
+  }
   displayStudents(studentArray);
   showNumberOfStudents();
-  alert("YOU HAVE BEEN HACKED!");
+  alert("YOU HAVE BEEN HACKED! YOU CAN'T TRUST THE SYSTEM!");
   registerSearchBar();
 }
