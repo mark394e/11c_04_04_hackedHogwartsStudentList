@@ -5,9 +5,11 @@ document.addEventListener("DOMContentLoaded", init);
 // creating empty array for cleaned up data
 const studentArray = [];
 
+// array used for search function
 let students = [];
 
-let expelledStudents = [];
+// seperate array for expelled students
+const expelledStudents = [];
 
 const JSONArray = "https://petlatkea.dk/2021/hogwarts/students.json";
 const bloodJSON = "https://petlatkea.dk/2021/hogwarts/families.json";
@@ -37,8 +39,8 @@ let filterBy = "all";
 async function init() {
   console.log("ready");
   registerFilterButtons();
-  registerSearchBar();
   loadStudents();
+  registerSearchBar();
 }
 
 function registerSearchBar() {
@@ -50,7 +52,14 @@ function registerSearchBar() {
       const isVisible = student.firstname.toLowerCase().includes(value) || student.lastname.toLowerCase().includes(value);
       student.element.classList.toggle("hide", !isVisible);
     });
+    registerHacking(searchInput);
   });
+}
+
+function registerHacking(searchInput) {
+  if (searchInput.value === "hack") {
+    hackTheSystem();
+  }
 }
 
 function registerFilterButtons() {
@@ -186,6 +195,7 @@ function prepareStudents(studentList) {
 
 function showNumberOfStudents() {
   document.querySelector("#numberofstudents").textContent = `Attending students: ${studentArray.length}`;
+  document.querySelector("#numberofexpelled").textContent = `Expelled students: ${expelledStudents.length}`;
 }
 
 function displayStudents(studentArray) {
@@ -261,12 +271,15 @@ function displayStudents(studentArray) {
       klon.querySelector("#expell").removeEventListener("click", clickExpell);
       if (student.expelled === true) {
         alert("Student is already expelled");
+      } else if (student.firstname === "Markus") {
+        alert("YOU CAN'T GET RID OF ME!");
       } else {
         student.in_squad = false;
         student.prefect = false;
-        studentArray.splice(studentArray.indexOf(student), 1);
         student.expelled = true;
+        studentArray.splice(studentArray.indexOf(student), 1);
         expelledStudents.push(student);
+        showNumberOfStudents();
       }
 
       buildStudentList();
@@ -319,6 +332,10 @@ function showDetails(student) {
   popup.querySelector(".firstName").textContent = `Firstname: ${student.firstname}`;
   popup.querySelector(".lastName").textContent = `Lastname: ${student.lastname}`;
 
+  if (student.lastname === "") {
+    popup.querySelector(".lastName").textContent = "";
+  }
+
   if (student.middlename != "") {
     popup.querySelector(".middleName").textContent = `Middlename: ${student.middlename}`;
   } else {
@@ -336,16 +353,22 @@ function showDetails(student) {
   popup.querySelector(".image").src = `images/${student.image}`;
   popup.querySelector(".blood").textContent = `Bloodstatus: ${student.bloodStatus}`;
 
-  if (student.expelled === true) {
-    document.querySelector(".expelled").textContent = "Expelled: Yes";
+  if (student.prefect === true) {
+    document.querySelector(".prefect").textContent = "Prefect: ✅";
   } else {
-    document.querySelector(".expelled").textContent = "Expelled: No";
+    document.querySelector(".prefect").textContent = "Prefect: ❌";
+  }
+
+  if (student.expelled === true) {
+    document.querySelector(".expelled").textContent = "Expelled: ✅";
+  } else {
+    document.querySelector(".expelled").textContent = "Expelled: ❌";
   }
 
   if (student.in_squad === true) {
-    document.querySelector(".squad").textContent = "Inquisitorial Squad: Yes";
+    document.querySelector(".squad").textContent = "Inquisitorial Squad: ✅";
   } else {
-    document.querySelector(".squad").textContent = "Inquisitorial Squad: No";
+    document.querySelector(".squad").textContent = "Inquisitorial Squad: ❌";
   }
 
   document.querySelector("#luk").addEventListener("click", () => (popup.style.display = "none"));
@@ -510,4 +533,27 @@ function isExpelled(student) {
 
 function isAttending(student) {
   return student.expelled === false;
+}
+
+function hackTheSystem() {
+  const hacker = {
+    firstname: "Markus",
+    nickname: "Mergus",
+    middlename: "Hoffmann",
+    lastname: "Lund",
+    gender: "Boy",
+    house: "Slytherin",
+    image: "hacker_me.png",
+    blood: "Pureblood",
+    expelled: false,
+    prefect: false,
+    in_squad: true,
+    god_mode: true,
+  };
+
+  studentArray.push(hacker);
+  displayStudents(studentArray);
+  showNumberOfStudents();
+  alert("YOU HAVE BEEN HACKED!");
+  registerSearchBar();
 }
