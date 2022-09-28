@@ -242,12 +242,15 @@ function displayStudents(studentArray) {
 
       if (settings.hacked && student.house === "Slytherin") {
         student.in_squad = true;
-        setTimeout(removeInSquad(), 1000);
+
+        setTimeout(removeInSquad, 1000);
         function removeInSquad() {
-          console.log("removed in_squad");
           student.in_squad = false;
-          this.querySelector("#in-squad").textContent = "Inquisitorial Squad";
+          alert("ERROR: Couldn't make student join the Inquisitorial Squad");
+          buildStudentList();
         }
+      } else if (settings.hacked && student.house !== "Slytherin") {
+        alert("This student is either not Pureblood or Slytherin");
       } else if (student.in_squad === true) {
         student.in_squad = false;
       } else if (student.expelled === true) {
@@ -255,7 +258,7 @@ function displayStudents(studentArray) {
       } else if (student.house === "Slytherin" || student.bloodStatus === "Pureblood") {
         student.in_squad = true;
       } else {
-        alert("This student is not Pureblood or Slytherin");
+        alert("This student is either not Pureblood or Slytherin");
       }
 
       buildStudentList();
@@ -593,16 +596,16 @@ function hackTheSystem() {
     alert("YOU HAVE BEEN HACKED! YOU CAN'T TRUST THE SYSTEM!");
     registerSearchBar();
   }
-}
 
-function hackedView() {
-  if (settings.hacked) {
-    document.querySelector("body").style.backgroundColor = "#333333";
-    document.querySelector("h1").style.color = "#1FFF0F";
-    document.querySelector("#searchbar label").style.color = "#1FFF0F";
-    const headerP = document.querySelectorAll(".header p");
-    headerP.forEach((p) => {
-      p.style.color = "#1FFF0F";
-    });
+  function hackedView() {
+    if (settings.hacked) {
+      document.querySelector("body").style.backgroundColor = "#333333";
+      document.querySelector("h1").style.color = "#1FFF0F";
+      document.querySelector("#searchbar label").style.color = "#1FFF0F";
+      const headerP = document.querySelectorAll(".header p");
+      headerP.forEach((p) => {
+        p.style.color = "#1FFF0F";
+      });
+    }
   }
 }
