@@ -1,3 +1,27 @@
+body {
+  background-color: #e0c9a6;
+}
+.header {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 25px;
+}
+
+#searchbar {
+  margin-top: 30px;
+  padding: 0;
+}
+
+.filtersort {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+.filter-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
 article {
   border: 2px solid darkred;
   padding: 10px;

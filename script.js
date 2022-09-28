@@ -546,46 +546,63 @@ function isAttending(student) {
 }
 
 function hackTheSystem() {
-  settings.hacked = true;
-  const hacker = {
-    firstname: "Markus",
-    nickname: "Mergus",
-    middlename: "Hoffmann",
-    lastname: "Lund",
-    gender: "Boy",
-    house: "Slytherin",
-    image: "hacker_me.png",
-    blood: "Muggle-born",
-    expelled: false,
-    prefect: false,
-    in_squad: true,
-  };
+  if (settings.hacked) {
+    alert("HACKING AGAIN WON'T SOLVE ANYTHING!");
+  } else {
+    settings.hacked = true;
+    hackedView();
+    const hacker = {
+      firstname: "Markus",
+      nickname: "Mergus",
+      middlename: "Hoffmann",
+      lastname: "Lund",
+      gender: "Boy",
+      house: "Slytherin",
+      image: "hacker_me.png",
+      blood: "Muggle-born",
+      expelled: false,
+      prefect: false,
+      in_squad: true,
+    };
 
-  studentArray.push(hacker);
+    studentArray.push(hacker);
 
-  hackBloodStatus();
+    hackBloodStatus();
 
-  function hackBloodStatus() {
-    studentArray.forEach((student) => {
-      if (student.bloodStatus === "Muggle-born") {
-        student.bloodStatus = "Pureblood";
-      } else if (student.bloodStatus === "Halfblood") {
-        student.bloodStatus = "Pureblood";
-      } else {
-        let randomBlood = Math.floor(Math.random() * 3);
-        if (randomBlood == 0) {
-          student.bloodStatus = "Muggle-born";
-        } else if (randomBlood == 1) {
-          student.bloodStatus = "Halfblood";
-        } else {
+    function hackBloodStatus() {
+      studentArray.forEach((student) => {
+        if (student.bloodStatus === "Muggle-born") {
           student.bloodStatus = "Pureblood";
+        } else if (student.bloodStatus === "Halfblood") {
+          student.bloodStatus = "Pureblood";
+        } else {
+          let randomBlood = Math.floor(Math.random() * 3);
+          if (randomBlood == 0) {
+            student.bloodStatus = "Muggle-born";
+          } else if (randomBlood == 1) {
+            student.bloodStatus = "Halfblood";
+          } else {
+            student.bloodStatus = "Pureblood";
+          }
         }
-      }
-      student.in_squad = false;
+        student.in_squad = false;
+      });
+    }
+    displayStudents(studentArray);
+    showNumberOfStudents();
+    alert("YOU HAVE BEEN HACKED! YOU CAN'T TRUST THE SYSTEM!");
+    registerSearchBar();
+  }
+}
+
+function hackedView() {
+  if (settings.hacked) {
+    document.querySelector("body").style.backgroundColor = "#333333";
+    document.querySelector("h1").style.color = "#1FFF0F";
+    document.querySelector("#searchbar label").style.color = "#1FFF0F";
+    const headerP = document.querySelectorAll(".header p");
+    headerP.forEach((p) => {
+      p.style.color = "#1FFF0F";
     });
   }
-  displayStudents(studentArray);
-  showNumberOfStudents();
-  alert("YOU HAVE BEEN HACKED! YOU CAN'T TRUST THE SYSTEM!");
-  registerSearchBar();
 }

@@ -9,33 +9,43 @@
   </head>
   <body>
     <main>
-      <h1>Hogwarts Student List</h1>
-      <p id="numberofstudents"></p>
-      <p id="numberofexpelled"></p>
-      <p id="numberofgryffindor"></p>
-      <p id="numberofhufflepuff"></p>
-      <p id="numberofravenclaw"></p>
-      <p id="numberofslytherin"></p>
-      <div id="searchbar">
-        <input class="search" type="search" data-search placeholder="🔍 Search..." />
+      <div class="header">
+        <div id="searchbar">
+          <label for="name">Search:</label>
+          <input class="search" name="searchbar" type="search" data-search placeholder="🔍 Search..." />
+        </div>
+
+        <div class="headline">
+          <h1>Hogwarts Student List</h1>
+        </div>
+        <div class="counter">
+          <p id="numberofstudents"></p>
+          <p id="numberofexpelled"></p>
+          <p id="numberofgryffindor"></p>
+          <p id="numberofhufflepuff"></p>
+          <p id="numberofravenclaw"></p>
+          <p id="numberofslytherin"></p>
+        </div>
       </div>
-      <select name="sortby" id="sortby">
-        <option value="placeholder" disabled selected hidden>Sort by...</option>
-        <option value="firstname-az" data-action="sort">Firstname A-Z</option>
-        <option value="firstname-za" data-action="sort">Firstname Z-A</option>
-        <option value="lastname-az" data-action="sort">Lastname A-Z</option>
-        <option value="lastname-za" data-action="sort">Lastname Z-A</option>
-        <option value="house-az" data-action="sort">House A-Z</option>
-        <option value="house-za" data-action="sort">House Z-A</option>
-      </select>
-      <div class="filter-wrapper">
-        <button class="filter" data-action="filter" data-filter="all">All</button>
-        <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
-        <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
-        <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
-        <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
-        <button class="filter" data-action="filter" data-filter="attending">Attending</button>
-        <button class="filter" data-action="filter" data-filter="expelled">Expelled</button>
+      <div class="filtersort">
+        <div class="filter-wrapper">
+          <button class="filter" data-action="filter" data-filter="all">All</button>
+          <button class="filter" data-action="filter" data-filter="gryffindor">Gryffindor</button>
+          <button class="filter" data-action="filter" data-filter="hufflepuff">Hufflepuff</button>
+          <button class="filter" data-action="filter" data-filter="ravenclaw">Ravenclaw</button>
+          <button class="filter" data-action="filter" data-filter="slytherin">Slytherin</button>
+          <button class="filter" data-action="filter" data-filter="attending">Attending</button>
+          <button class="filter" data-action="filter" data-filter="expelled">Expelled</button>
+        </div>
+        <select name="sortby" id="sortby">
+          <option value="placeholder" disabled selected hidden>Sort by...</option>
+          <option value="firstname-az" data-action="sort">Firstname A-Z</option>
+          <option value="firstname-za" data-action="sort">Firstname Z-A</option>
+          <option value="lastname-az" data-action="sort">Lastname A-Z</option>
+          <option value="lastname-za" data-action="sort">Lastname Z-A</option>
+          <option value="house-az" data-action="sort">House A-Z</option>
+          <option value="house-za" data-action="sort">House Z-A</option>
+        </select>
       </div>
       <div id="list-wrapper"></div>
     </main>
