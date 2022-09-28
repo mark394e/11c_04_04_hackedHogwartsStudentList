@@ -34,7 +34,7 @@ article {
   width: 300px;
 }
 
-article img {
+#list-wrapper article img {
   cursor: pointer;
 }
 
