@@ -484,6 +484,8 @@ function tryToMakeAPrefect(selectedStudent) {
   showNumberOfStudents();
 }
 
+// filters the studentArray by the filterBy value
+// returns a list of filteredStudents
 function filterStudents(filteredStudents) {
   if (settings.filterBy === "gryffindor") {
     filteredStudents = studentArray.filter(isGryffindor);
@@ -502,6 +504,8 @@ function filterStudents(filteredStudents) {
   return filteredStudents;
 }
 
+// sorts the studentArray by the sortBy value
+// returns a list of sortedStudents
 function sortStudents(sortedStudentList) {
   if (settings.sortBy === "firstname-az") {
     sortedStudentList = sortedStudentList.sort(sortByFirstnameAZ);
@@ -518,6 +522,7 @@ function sortStudents(sortedStudentList) {
   }
   return sortedStudentList;
 
+  // everything below is sorting either firstname, lastname or house in ascending or desceding order
   function sortByFirstnameAZ(studentA, studentB) {
     if (studentA.firstname > studentB.firstname) {
       return 1;
@@ -567,30 +572,37 @@ function sortStudents(sortedStudentList) {
   }
 }
 
+// returns every student in house gryffindor
 function isGryffindor(student) {
   return student.house === "Gryffindor";
 }
 
+// returns every student in house hufflepuff
 function isHufflepuff(student) {
   return student.house === "Hufflepuff";
 }
 
+// returns every student in house ravenclaw
 function isRavenclaw(student) {
   return student.house === "Ravenclaw";
 }
 
+// returns every student in house slytherin
 function isSlytherin(student) {
   return student.house === "Slytherin";
 }
 
+// returns every student that is expelled
 function isExpelled(student) {
   return student.expelled === true;
 }
 
+// returns every student that is NOT expelled
 function isAttending(student) {
   return student.expelled === false;
 }
 
+// creates a new object with the hackers information and pushes it to the studentArray
 function hackTheSystem() {
   if (settings.hacked) {
     alert("HACKING AGAIN WON'T SOLVE ANYTHING!");
@@ -614,7 +626,7 @@ function hackTheSystem() {
     studentArray.push(hacker);
 
     hackBloodStatus();
-
+    // radomises the bloodstatus of every student
     function hackBloodStatus() {
       studentArray.forEach((student) => {
         if (student.bloodStatus === "Muggle-born") {
@@ -640,6 +652,7 @@ function hackTheSystem() {
     registerSearchBar();
   }
 
+  //   changes the view of the site when it has been hacked
   function hackedView() {
     if (settings.hacked) {
       document.querySelector("body").style.backgroundColor = "#333333";
